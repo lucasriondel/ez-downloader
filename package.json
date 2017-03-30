@@ -1,0 +1,22 @@
+{
+  "name": "ez-downloader",
+  "version": "1.0.0",
+  "description": "Utility to download tracks from Soundcloud and Youtube",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasriondel/ez-downloader.git"
+  },
+  "keywords": [
+    "soundcloud", "youtube", "download", "downloader", "ez"
+  ],
+  "author": "Lucas Riondel & Thomas André",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasriondel/ez-downloader/issues"
+  },
+  "homepage": "https://github.com/lucasriondel/ez-downloader#readme"
+}
