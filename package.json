@@ -11,12 +11,19 @@
     "url": "git+https://github.com/lucasriondel/ez-downloader.git"
   },
   "keywords": [
-    "soundcloud", "youtube", "download", "downloader", "ez"
+    "soundcloud",
+    "youtube",
+    "download",
+    "downloader",
+    "ez"
   ],
   "author": "Lucas Riondel & Thomas André",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lucasriondel/ez-downloader/issues"
   },
-  "homepage": "https://github.com/lucasriondel/ez-downloader#readme"
+  "homepage": "https://github.com/lucasriondel/ez-downloader#readme",
+  "dependencies": {
+    "chalk": "^1.1.3"
+  }
 }
