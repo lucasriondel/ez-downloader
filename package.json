@@ -25,11 +25,15 @@
   },
   "homepage": "https://github.com/lucasriondel/ez-downloader#readme",
   "dependencies": {
-    "chalk": "^1.1.3"
+    "chalk": "^1.1.3",
+    "debug": "^2.6.3",
+    "request": "^2.81.0",
+    "request-progress": "^3.0.0",
+    "request-promise-native": "^1.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-preset-es2015": "^6.24.0",
-    "babel-preset-stage-2": "^6.22.0"
+    "babel-preset-stage-2": "^6.22.0",
   }
 }
