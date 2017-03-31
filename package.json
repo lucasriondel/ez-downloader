@@ -26,6 +26,7 @@
   "homepage": "https://github.com/lucasriondel/ez-downloader#readme",
   "dependencies": {
     "chalk": "^1.1.3",
+    "commander": "^2.9.0",
     "debug": "^2.6.3",
     "request": "^2.81.0",
     "request-progress": "^3.0.0",
