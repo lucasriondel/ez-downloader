@@ -28,10 +28,12 @@
     "chalk": "^1.1.3",
     "commander": "^2.9.0",
     "debug": "^2.6.3",
+    "fluent-ffmpeg": "^2.1.0",
     "request": "^2.81.0",
     "request-progress": "^3.0.0",
     "request-promise-native": "^1.0.3",
-    "url-parse": "^1.1.8"
+    "url-parse": "^1.1.8",
+    "ytdl-core": "^0.11.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",
