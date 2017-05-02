@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint lib/*.js",
+    "start:nodemon": "nodemon lib/index.js --exec \"npm run lint && babel-node --presets es2015,stage-2\"",
+    "start": "npm run lint && babel-node --presets es2015,stage-2 lib/index.js"
   },
   "repository": {
     "type": "git",
