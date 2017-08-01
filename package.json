@@ -5,8 +5,13 @@
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint lib/*.js",
-    "start:nodemon": "nodemon lib/index.js --exec \"npm run lint && babel-node --presets es2015,stage-2\"",
-    "start": "npm run lint && babel-node --presets es2015,stage-2 lib/index.js"
+    "build": "babel lib -d dist/ --presets es2015,stage-2",
+    "start": "npm run lint && node dist/index.js",
+    "start:nodemon": "nodemon dist/index.js",
+    "start:dev": "npm run lint && babel-node --presets es2015,stage-2 lib/index.js",
+    "start:dev:nodemon": "nodemon lib/index.js --exec \"npm run lint && babel-node --presets es2015,stage-2 lib\/index.js\"",
+    "start:prod": "node dist/index.js",
+    "re": "npm run lint && npm run build && npm run start"
   },
   "repository": {
     "type": "git",
