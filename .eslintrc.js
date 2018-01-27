@@ -5,9 +5,11 @@ module.exports = {
 	},
 	"extends": "eslint:recommended",
 	"parserOptions": {
+        "ecmaVersion": 2017,
 		"sourceType": "module"
 	},
   "rules": {
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "no-console": "off",
   }
 };
