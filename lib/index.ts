@@ -2,37 +2,78 @@ import chalk from 'chalk';
 import * as debugModule from 'debug';
 import * as urlParse from 'url-parse';
 import * as ProgressBar from 'progress';
+import * as inquirer from 'inquirer';
 
-import EzSoundcloudDownloader from '../lib/ez-downloader-soundcloud';
-import yt_downloader from '../lib/ez-downloader-youtube';
-import tagger from '../mdr/tagger';
+import EzDownloaderSoundcloud from './EzDownloaderSoundcloud';
+import EzDownloaderYoutube from './EzDownloaderYoutube';
+import Tagger, { UserFriendlyTags } from './Tagger';
 
-const debug = debugModule('entry');
+interface AskEditTag {
+  editTags: 'No' | 'Yes';
+}
 
-const ezSoundcloudDownloader = new EzSoundcloudDownloader();
+const askTagEdition = async (filename: string, coverUrl?: string) => {
+  const question: inquirer.Question<AskEditTag> = {
+    type: 'list',
+    name: 'editTags',
+    message: 'Do you want to edit tags ?',
+    choices: ['No', 'Yes'],
+  };
+  const answer = await inquirer.prompt<AskEditTag>(question);
 
-async function downloadFromSoundcloud(url: string) {
+  if (answer.editTags === 'No') return;
+
+  console.log(`Tag edition for ${filename}`);
+  const questions: inquirer.Questions<UserFriendlyTags> = [
+    {
+      type: 'input',
+      name: 'title',
+      message: 'Song title',
+    },
+    {
+      type: 'input',
+      name: 'artist',
+      message: 'Song artist',
+    },
+    {
+      type: 'input',
+      name: 'album',
+      message: 'Album title',
+    },
+    {
+      type: 'input',
+      name: 'coverURL',
+      message: 'Cover image url',
+      default: coverUrl || undefined,
+    },
+  ];
+
+  const answers = await inquirer.prompt<UserFriendlyTags>(questions);
+  await tagger.editTags(filename, answers);
+};
+
+const downloadFromSoundcloud = async (url: string) => {
   try {
-    const result = await ezSoundcloudDownloader.download(url, displayProgress);
+    const result = await ezDownloaderSoundcloud.download(url, displayProgress);
     debug(chalk.green('Song downloaded !'));
-    tagger.askTagEdition(result.filename, result.coverUrl);
+    askTagEdition(result.filename, result.coverUrl);
   } catch (e) {
     console.error(chalk.red.bold(e));
   }
-}
+};
 
-async function downloadFromYoutube(url: string) {
+const downloadFromYoutube = async (url: string) => {
   try {
-    const result = await yt_downloader.download(url, displayProgress);
+    const result = await ezDownloaderYoutube.download(url, displayProgress);
     debug(chalk.green('Song downloaded !'));
-    tagger.askTagEdition(result.filename);
+    askTagEdition(result.filename);
   } catch (e) {
     console.error(chalk.red.bold(e));
   }
   // TODO catch errors
-}
+};
 
-function displayProgress(chunk: any, total: any) {
+const displayProgress = (chunk: number, total: number) => {
   if (bar === null)
     bar = new ProgressBar('downloading [:bar] :percent :etas', {
       complete: '=',
@@ -41,13 +82,19 @@ function displayProgress(chunk: any, total: any) {
       total,
     });
   bar.tick(chunk);
-}
+};
+
+const debug = debugModule('entry');
+
+const ezDownloaderSoundcloud = new EzDownloaderSoundcloud();
+const ezDownloaderYoutube = new EzDownloaderYoutube();
+const tagger = new Tagger();
 
 const link = process.argv[2];
 let bar: ProgressBar | null = null;
+const parsedUrl = urlParse(link, true);
 
 debug(`Track url : ${link}`);
-const parsedUrl = urlParse(link, true);
 if (parsedUrl.host === 'soundcloud.com' && parsedUrl.hostname === 'soundcloud.com') {
   downloadFromSoundcloud(link);
 }

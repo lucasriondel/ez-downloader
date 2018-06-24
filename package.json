@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Utility to download tracks from Soundcloud and Youtube",
   "main": "lib/index",
+  "typings": "lib/index",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "start": "ts-node --verbose ./lib/index.ts",
     "watch": "nodemon -L --watch lib --verbose --inspect=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
+    "watch:yt": "yarn watch https://www.youtube.com/watch?v=AUyqvUG0ypA",
+    "watch:sc": "yarn watch https://soundcloud.com/lifeformed/fastfall-dustforce-ost-the",
     "dev": "nodemon --inspect-brk=0.0.0.0:9229 -r ts-node/register ./lib/index.ts"
   },
   "repository": {
