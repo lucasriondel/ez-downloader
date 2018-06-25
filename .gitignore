@@ -1,3 +1,9 @@
+.idea/
+
 node_modules/
 dist/
-.idea/
+covers/
+yarn-error.log
+
+*.mp3
+*.wav
