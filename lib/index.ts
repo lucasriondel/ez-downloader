@@ -3,10 +3,21 @@ import * as debugModule from 'debug';
 import * as urlParse from 'url-parse';
 import * as ProgressBar from 'progress';
 import * as inquirer from 'inquirer';
+import * as program from 'commander';
+import * as readline from 'readline';
 
 import EzDownloaderSoundcloud from './EzDownloaderSoundcloud';
 import EzDownloaderYoutube from './EzDownloaderYoutube';
 import Tagger, { UserFriendlyTags } from './Tagger';
+
+const debug = debugModule('entry');
+const version = process.env.npm_package_version as string;
+
+const ezDownloaderSoundcloud = new EzDownloaderSoundcloud();
+const ezDownloaderYoutube = new EzDownloaderYoutube();
+const tagger = new Tagger();
+
+let bar: ProgressBar | null = null;
 
 interface AskEditTag {
   editTags: 'No' | 'Yes';
@@ -52,21 +63,21 @@ const askTagEdition = async (filename: string, coverUrl?: string) => {
   await tagger.editTags(filename, answers);
 };
 
-const downloadFromSoundcloud = async (url: string) => {
+const downloadFromSoundcloud = async (url: string, withTags: boolean) => {
   try {
     const result = await ezDownloaderSoundcloud.download(url, displayProgress);
-    debug(chalk.green('Song downloaded !'));
-    askTagEdition(result.filename, result.coverUrl);
+    console.log(chalk.green('Song downloaded !'));
+    if (withTags) askTagEdition(result.filename, result.coverUrl);
   } catch (e) {
     console.error(chalk.red.bold(e));
   }
 };
 
-const downloadFromYoutube = async (url: string) => {
+const downloadFromYoutube = async (url: string, withTags: boolean) => {
   try {
     const result = await ezDownloaderYoutube.download(url, displayProgress);
     debug(chalk.green('Song downloaded !'));
-    askTagEdition(result.filename);
+    if (withTags) askTagEdition(result.filename);
   } catch (e) {
     console.error(chalk.red.bold(e));
   }
@@ -84,23 +95,43 @@ const displayProgress = (chunk: number, total: number) => {
   bar.tick(chunk);
 };
 
-const debug = debugModule('entry');
+const processUrl = async (url: string) => {
+  debug(`TRACK_URL ${url}`);
+  const parsedUrl = urlParse(url, true);
+  if (parsedUrl.host === 'soundcloud.com' && parsedUrl.hostname === 'soundcloud.com') {
+    await downloadFromSoundcloud(url, !program.notags);
+  }
+  // TODO handle short youtube urls
+  else if (parsedUrl.host === 'www.youtube.com' && parsedUrl.hostname === 'www.youtube.com') {
+    await downloadFromYoutube(url, !program.notags);
+  } else {
+    console.error(chalk.red.bold('Wrong url, service not found.'));
+  }
+};
 
-const ezDownloaderSoundcloud = new EzDownloaderSoundcloud();
-const ezDownloaderYoutube = new EzDownloaderYoutube();
-const tagger = new Tagger();
+async function main() {
+  program
+    .name('ez')
+    .arguments('<url ...>')
+    .version(version)
+    .option('-n, --notags', 'Do not ask for tags')
+    .parse(process.argv);
 
-const link = process.argv[2];
-let bar: ProgressBar | null = null;
-const parsedUrl = urlParse(link, true);
+  const { notags, args } = program;
+  debug('URL', args);
+  debug('TAG EDITION', !notags);
 
-debug(`Track url : ${link}`);
-if (parsedUrl.host === 'soundcloud.com' && parsedUrl.hostname === 'soundcloud.com') {
-  downloadFromSoundcloud(link);
+  if (args.length > 0) {
+    for (const url of args) await processUrl(url);
+  } else {
+    console.log(chalk.green(`ez cli v${version}\nplease type url`));
+    const rlInterface = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+      terminal: true,
+    });
+    rlInterface.on('line', async (line: string) => await processUrl(line.trim()));
+  }
 }
-// TODO handle short youtube links
-else if (parsedUrl.host === 'www.youtube.com' && parsedUrl.hostname === 'www.youtube.com') {
-  downloadFromYoutube(link);
-} else {
-  debug(chalk.red('Wrong url, service not found.'));
-}
+
+main();
