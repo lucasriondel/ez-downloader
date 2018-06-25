@@ -1,7 +1,7 @@
 {
   "name": "ez-downloader",
-  "version": "1.0.0",
-  "description": "Utility to download tracks from Soundcloud and Youtube",
+  "version": "0.1.1",
+  "description": "CLI  to download tracks from Soundcloud and Youtube",
   "main": "lib/index",
   "typings": "lib/index",
   "scripts": {
