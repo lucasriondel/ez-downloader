@@ -1,18 +1,20 @@
 {
   "name": "ez-downloader",
-  "version": "1.0.0",
-  "description": "Utility to download tracks from Soundcloud and Youtube",
+  "version": "0.1.1",
+  "description": "CLI  to download tracks from Soundcloud and Youtube",
   "main": "lib/index",
   "typings": "lib/index",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "start": "ts-node --verbose ./lib/index.ts",
+    "start": "node -r ts-node/register ./lib/index.ts",
+    "dev": "node --inspect=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
+    "dev:brk": "node --inspect-brk=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
+    "dev:multi-dl-no-tags": "yarn dev -n https://www.youtube.com/watch?v=AUyqvUG0ypA https://soundcloud.com/lifeformed/fastfall-dustforce-ost-the",
     "watch": "nodemon -L --watch lib --verbose --inspect=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
     "watch:yt": "yarn watch https://www.youtube.com/watch?v=AUyqvUG0ypA",
-    "watch:sc": "yarn watch https://soundcloud.com/lifeformed/fastfall-dustforce-ost-the",
-    "dev": "nodemon --inspect-brk=0.0.0.0:9229 -r ts-node/register ./lib/index.ts"
+    "watch:sc": "yarn watch https://soundcloud.com/lifeformed/fastfall-dustforce-ost-the"
   },
   "repository": {
     "type": "git",
@@ -34,6 +36,7 @@
   "dependencies": {
     "browser-id3-writer": "^3.0.3",
     "chalk": "2.4.1",
+    "commander": "^2.15.1",
     "debug": "^2.6.3",
     "fluent-ffmpeg": "^2.1.0",
     "inquirer": "^3.0.6",
