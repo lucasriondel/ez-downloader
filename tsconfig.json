@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "baseUrl": ".",
+    "module": "commonjs",
+    "declaration": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "es2017"],
+    "target": "es6",
+    "sourceMap": true,
+    "allowJs": false,
+    "outDir": "./dist",
+    "strictNullChecks": true
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["lib"]
+}
