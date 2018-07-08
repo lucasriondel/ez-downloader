@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "baseUrl": ".",
     "module": "commonjs",
     "declaration": true,
