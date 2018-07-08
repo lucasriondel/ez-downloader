@@ -10,7 +10,7 @@
   "typings": ".",
   "scripts": {
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "clean": "rm -rf *.mp3 *.wav *.aiff *.flac",
+    "clean": "rm -rf *.mp3 *.wav *.aiff *.flac covers/",
     "start": "node -r ts-node/register ./lib/index.ts",
     "dev": "node --inspect=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
     "dev:brk": "node --inspect-brk=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
@@ -42,8 +42,6 @@
     "commander": "^2.15.1",
     "debug": "^2.6.3",
     "fluent-ffmpeg": "^2.1.0",
-    "inquirer": "^3.0.6",
-    "line-by-line": "^0.1.6",
     "md5": "^2.2.1",
     "mkdirp": "^0.5.1",
     "progress": "^2.0.0",
@@ -58,8 +56,6 @@
   "devDependencies": {
     "@types/debug": "^0.0.30",
     "@types/fluent-ffmpeg": "^2.1.6",
-    "@types/inquirer": "^0.0.42",
-    "@types/line-by-line": "^0.1.2",
     "@types/md5": "^2.1.32",
     "@types/mkdirp": "^0.5.2",
     "@types/progress": "^2.0.1",
