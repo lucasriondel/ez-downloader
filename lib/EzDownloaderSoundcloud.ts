@@ -5,6 +5,7 @@ import * as request from 'request-promise-native';
 import * as progress from 'request-progress';
 import * as debugModule from 'debug';
 import * as sanitizeFilename from 'sanitize-filename';
+import * as path from 'path';
 
 const debug = debugModule('soundcloud');
 
@@ -84,10 +85,8 @@ interface TrackInfo {
 const baseRouteAPI = 'https://api.soundcloud.com';
 
 export default class EzDownloaderSoundcloud {
-  private CLIENT_ID: string;
-  constructor() {
-    this.CLIENT_ID = 'a3e059563d7fd3372b49b37f00a00bcf';
-  }
+  private CLIENT_ID: string = 'a3e059563d7fd3372b49b37f00a00bcf';
+  private outputDir: string = './';
 
   private handleDownloadProgress(
     trackInfo: TrackInfo,
@@ -116,10 +115,17 @@ export default class EzDownloaderSoundcloud {
           resolve();
         })
         .pipe(
-          fs.createWriteStream(`${sanitizeFilename(trackInfo.title)}.${trackInfo.original_format}`),
+          fs.createWriteStream(
+            path.join(
+              this.outputDir,
+              `${sanitizeFilename(trackInfo.title)}.${trackInfo.original_format}`,
+            ),
+          ),
         );
     });
   }
+
+  public setOutputDir = (outputDir: string) => (this.outputDir = outputDir);
 
   public async download(trackUrl: string, onProgress: OnProgressFunction): Promise<Track> {
     try {

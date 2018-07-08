@@ -34,9 +34,21 @@
     "@types/rx" "*"
     "@types/through" "*"
 
+"@types/line-by-line@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@types/line-by-line/-/line-by-line-0.1.2.tgz#87e57bd453c45d5ab702b9f8bac27b4c03a47794"
+  dependencies:
+    "@types/node" "*"
+
 "@types/md5@^2.1.32":
   version "2.1.32"
   resolved "https://registry.yarnpkg.com/@types/md5/-/md5-2.1.32.tgz#93e23437fcd17a7b9ca98d02aa6002e835842fe8"
+  dependencies:
+    "@types/node" "*"
+
+"@types/mkdirp@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.5.2.tgz#503aacfe5cc2703d5484326b1b27efa67a339c1f"
   dependencies:
     "@types/node" "*"
 
@@ -613,6 +625,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+line-by-line@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/line-by-line/-/line-by-line-0.1.6.tgz#6236edd1db2d1695addf11f0268e74a181561c30"
+
 lodash@^4.13.1, lodash@^4.17.10, lodash@^4.3.0:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
@@ -736,6 +752,10 @@ qs@~6.5.1:
 querystringify@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
+
+readline-promise@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/readline-promise/-/readline-promise-1.0.3.tgz#677d9a5278b9516308c27d2d6c7f14efe19ba8f5"
 
 request-progress@^3.0.0:
   version "3.0.0"

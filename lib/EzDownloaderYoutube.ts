@@ -4,10 +4,13 @@ import * as debugModule from 'debug';
 import * as sanitizeFilename from 'sanitize-filename';
 import { Track, OnProgressFunction } from './misc';
 import { IncomingMessage } from 'http';
+import * as path from 'path';
 
 const debug = debugModule('youtube');
 
 export default class EzYoutubeDownloader {
+  private outputDir: string = './';
+
   public download(trackUrl: string, onProgress: OnProgressFunction): Promise<Track> {
     return new Promise((resolve, reject) => {
       // TODO error handling
@@ -29,7 +32,7 @@ export default class EzYoutubeDownloader {
                 filename: `${sanitizeFilename(title)}.mp3`,
               }),
             )
-            .save(`${sanitizeFilename(title)}.mp3`);
+            .save(path.join(this.outputDir, `${sanitizeFilename(title)}.mp3`));
         } catch (e) {
           this.handleErrors(e);
           reject(e);
@@ -45,6 +48,8 @@ export default class EzYoutubeDownloader {
       });
     });
   }
+
+  public setOutputDir = (outputDir: string) => (this.outputDir = outputDir);
 
   private handleErrors(err: any) {
     debug(err);
