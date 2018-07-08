@@ -1,13 +1,16 @@
 {
   "name": "ez-downloader",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI  to download tracks from Soundcloud and Youtube",
-  "main": "lib/index",
-  "typings": "lib/index",
+  "main": "index.ts",
+  "bin": {
+    "ez": "./.bin/ezdownloader.js"
+  },
+  "preferGlobal": true,
+  "typings": ".",
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc -w",
     "lint": "tslint -p tsconfig.json -c tslint.json",
+    "clean": "rm -rf *.mp3 *.wav *.aiff *.flac covers/",
     "start": "node -r ts-node/register ./lib/index.ts",
     "dev": "node --inspect=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
     "dev:brk": "node --inspect-brk=0.0.0.0:9229 -r ts-node/register ./lib/index.ts",
@@ -27,7 +30,7 @@
     "downloader",
     "ez"
   ],
-  "author": "Lucas Riondel & Thomas André",
+  "author": "Lucas Riondel",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lucasriondel/ez-downloader/issues"
@@ -39,9 +42,10 @@
     "commander": "^2.15.1",
     "debug": "^2.6.3",
     "fluent-ffmpeg": "^2.1.0",
-    "inquirer": "^3.0.6",
     "md5": "^2.2.1",
+    "mkdirp": "^0.5.1",
     "progress": "^2.0.0",
+    "readline-promise": "^1.0.3",
     "request": "^2.81.0",
     "request-progress": "^3.0.0",
     "request-promise-native": "^1.0.3",
@@ -52,8 +56,8 @@
   "devDependencies": {
     "@types/debug": "^0.0.30",
     "@types/fluent-ffmpeg": "^2.1.6",
-    "@types/inquirer": "^0.0.42",
     "@types/md5": "^2.1.32",
+    "@types/mkdirp": "^0.5.2",
     "@types/progress": "^2.0.1",
     "@types/request": "^2.47.1",
     "@types/request-promise-native": "^1.0.15",

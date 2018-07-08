@@ -1,18 +1,32 @@
-# ez-downloader
-ez &lt;3
+# Ez Downloader
 
-Download tracks from youtube and soundcloud and set IDv3 tags straight from the command line
+Ez Downloader is small typescript-written CLI used to download Soundcloud and Youtube tracks to your computer.
 
-#### If you want set covers with the CLI, you have to create a folder named `covers` inside the root folder
+## Installation
+Clone this repo
 
-#### If you want to download youtube tracks, you need to install [ffmpeg](https://www.ffmpeg.org/) and add it to your PATH environnement variable
+    git clone https://github.com/lucasriondel/ez-downloader
+    cd ez-downloader
+    yarn install
+Run it using npm or yarn
 
-HOW TO:
+    npm run start
+    yarn start
+Or add it globally and use it everywhere !
 
-Build :
-> npm run build
+    npm install -g .
+    yarn add global .
+    // then
+    ez https://www.youtube.com/watch?v=8ulEMXUNyRo
 
-Dowload a track from Soundcloud/Youtube :
-> npm run start -- [trackUrl]
+## 
 
--- much more in package.json > scripts ! --
+The file explorer is accessible using the button in left corner of the navigation bar. You can create a new file by clicking the **New file** button in the file explorer. You can also create folders by clicking the **New folder** button.
+
+## CLI Options
+
+
+|Options|Description
+|-|-
+|`-n, --notags`|If this parameter is specified, for the whole duration of the program, it will not ask you if you would like to edit the IDv3 tags.
+|`-o, --outputDir <dir>`| Will use this directory to store the outputted file, and then saves this directory for future downloads.

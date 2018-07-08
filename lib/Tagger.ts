@@ -1,9 +1,11 @@
+import { initDir } from './misc';
 import * as ID3Writer from 'browser-id3-writer';
 import * as md5 from 'md5';
 import * as request from 'request-promise-native';
 import * as progress from 'request-progress';
 import * as fs from 'fs';
 import * as debugModule from 'debug';
+import * as mkdirp from 'mkdirp';
 
 const debug = debugModule('tagger');
 
@@ -97,16 +99,17 @@ export default class Tagger {
       throw new Error(`${trackPath} doesn't exist`);
 
     const { title, artist, album, coverURL } = newTags;
+    let coverPath = '';
     const tags: Tag[] = [
       { frame: Frame.SONG_TITLE, value: title },
       { frame: Frame.SONG_ARTISTS, value: Array.isArray(artist) ? artist : [artist] },
       { frame: Frame.ALBUM_TITLE, value: album },
     ];
     if (coverURL) {
+      await initDir('./covers');
       const artistFormatted = Array.isArray(artist) ? artist.join(', ') : artist;
-      tags.concat(
-        this.coverPathToTags(await this.downloadCover(coverURL, `${title} - ${artistFormatted}`)),
-      );
+      coverPath = await this.downloadCover(coverURL, `${title} - ${artistFormatted}`);
+      tags.concat(this.coverPathToTags(coverPath));
     }
 
     const writer = new ID3Writer(fs.readFileSync(trackPath));
@@ -115,5 +118,11 @@ export default class Tagger {
 
     const taggedSongBuffer = Buffer.from(writer.arrayBuffer);
     fs.writeFileSync(trackPath, taggedSongBuffer);
+
+    if (coverURL) {
+      fs.unlink(coverPath, err => {
+        if (err) throw new Error(`Cannot remove temporary cover ${coverPath}: ${err}`);
+      });
+    }
   }
 }

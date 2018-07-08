@@ -7,3 +7,5 @@ yarn-error.log
 
 *.mp3
 *.wav
+*.aiff
+*.flac
