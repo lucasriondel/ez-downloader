@@ -1,7 +1,12 @@
 import chalk, { Chalk } from 'chalk';
+import readline, { ReadlineInterface } from 'readline-promise';
 
 export default class Asker {
-  private rlInterface: any = null;
+  private rlInterface: ReadlineInterface = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: true,
+  });
 
   private prompt = chalk.white.bold('>');
   private choice = (choice: string) => chalk.white.inverse(`(${choice})`);
@@ -13,10 +18,6 @@ export default class Asker {
     this._question(`Do you want to edit tags ?`, chalk.bold.greenBright, 'y/n');
   private TagQuestion = (question: string, choice?: string) =>
     this._question(question, chalk.yellow, choice);
-
-  constructor(rlInterface: any) {
-    this.rlInterface = rlInterface;
-  }
 
   public askForURL = async (): Promise<string> =>
     (await this.rlInterface.questionAsync(this.URLQuestion())).trim();
